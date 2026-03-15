@@ -1,0 +1,31 @@
+# Зависимости
+node_modules/
+.pnpm-store/
+__pycache__/
+*.pyc
+.venv/
+
+# Сборка
+.next/
+dist/
+.turbo/
+out/
+
+# Среда
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Docker volumes
+pgdata/
+
+# Python
+*.egg-info/
+.pytest_cache/

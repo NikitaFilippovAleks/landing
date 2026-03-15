@@ -1,0 +1,31 @@
+{
+  "name": "Portfolio Landing",
+  "dockerComposeFile": ["../docker-compose.dev.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "prisma.prisma",
+        "mikestead.dotenv"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "python.languageServer": "Pylance",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.python"
+        }
+      }
+    }
+  },
+  "forwardPorts": [3000, 3001, 8000, 5432],
+  "postCreateCommand": "pnpm install && cd apps/api && pip install -r requirements.txt",
+  "remoteUser": "root"
+}

@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Мигающий курсор для TypeWriter и Terminal */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Плавающие blob-ы для мобильного фоллбека */
+@keyframes float-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(15px, 30px) scale(1.02); }
+}
+
+@keyframes float-blob-reverse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-25px, 30px) scale(0.97); }
+  50% { transform: translate(35px, -15px) scale(1.04); }
+  75% { transform: translate(-10px, -25px) scale(0.98); }
+}
+
+@keyframes float-blob-slow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  33% { transform: translate(-45%, -55%) scale(1.08); }
+  66% { transform: translate(-55%, -45%) scale(0.94); }
+}
+
+/* Утилитарные классы для анимаций */
+@utility animate-blink {
+  animation: blink 0.8s step-end infinite;
+}
+
+@utility animate-float-blob {
+  animation: float-blob 20s ease-in-out infinite;
+}
+
+@utility animate-float-blob-reverse {
+  animation: float-blob-reverse 25s ease-in-out infinite;
+}
+
+@utility animate-float-blob-slow {
+  animation: float-blob-slow 15s ease-in-out infinite;
+}
+
+/* Отключение анимаций для пользователей с prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

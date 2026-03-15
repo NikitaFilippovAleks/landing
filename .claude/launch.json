@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "echo",
+      "runtimeArgs": ["Web already running via Docker Compose"],
+      "port": 3000
+    },
+    {
+      "name": "admin",
+      "runtimeExecutable": "echo",
+      "runtimeArgs": ["Admin already running via Docker Compose"],
+      "port": 3001
+    }
+  ]
+}
