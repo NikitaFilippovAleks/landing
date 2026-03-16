@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "about": "О себе",
+    "skills": "Навыки",
+    "projects": "Проекты",
+    "contacts": "Контакты",
+    "cta": "Связаться"
+  },
+  "hero": {
+    "badge": "Открыт к предложениям",
+    "typewriter": ["Создаю современные веб-приложения", "Разрабатываю мобильные приложения", "Проектирую интерактивные интерфейсы", "Пишу чистый и поддерживаемый код"],
+    "cta_projects": "Смотреть проекты",
+    "cta_contact": "Связаться со мной",
+    "terminal_title": "terminal",
+    "terminal_line1": "const developer = new Developer();",
+    "terminal_line2": "developer.skills = ['React', 'Next.js', 'Flutter', 'TypeScript'];",
+    "terminal_line3": "developer.passion = 'Создание красивых интерфейсов';",
+    "terminal_line4": "developer.status = 'Открыт к предложениям ✨';"
+  },
+  "about": {
+    "title": "О себе",
+    "experience": "Лет опыта",
+    "projects_count": "Проектов",
+    "frameworks": "Фреймворка",
+    "motivation": "Мотивация"
+  },
+  "skills": {
+    "title": "Навыки"
+  },
+  "projects": {
+    "title": "Проекты",
+    "featured": "Избранный проект",
+    "demo": "Demo",
+    "github": "GitHub"
+  },
+  "contacts": {
+    "title": "Контакты",
+    "subtitle": "Готов обсудить ваш проект или предложение о сотрудничестве"
+  },
+  "footer": {
+    "rights": "© {year} Nikita Filippov. Все права защищены.",
+    "madeWith": "Сделано с"
+  }
+}

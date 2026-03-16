@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contacts": "Contacts",
+    "cta": "Contact"
+  },
+  "hero": {
+    "badge": "Open for opportunities",
+    "typewriter": ["Building modern web applications", "Developing mobile apps", "Designing interactive interfaces", "Writing clean and maintainable code"],
+    "cta_projects": "View projects",
+    "cta_contact": "Contact me",
+    "terminal_title": "terminal",
+    "terminal_line1": "const developer = new Developer();",
+    "terminal_line2": "developer.skills = ['React', 'Next.js', 'Flutter', 'TypeScript'];",
+    "terminal_line3": "developer.passion = 'Building beautiful interfaces';",
+    "terminal_line4": "developer.status = 'Open to opportunities ✨';"
+  },
+  "about": {
+    "title": "About",
+    "experience": "Years of experience",
+    "projects_count": "Projects",
+    "frameworks": "Frameworks",
+    "motivation": "Motivation"
+  },
+  "skills": {
+    "title": "Skills"
+  },
+  "projects": {
+    "title": "Projects",
+    "featured": "Featured project",
+    "demo": "Demo",
+    "github": "GitHub"
+  },
+  "contacts": {
+    "title": "Contacts",
+    "subtitle": "Ready to discuss your project or collaboration opportunity"
+  },
+  "footer": {
+    "rights": "© {year} Nikita Filippov. All rights reserved.",
+    "madeWith": "Made with"
+  }
+}
