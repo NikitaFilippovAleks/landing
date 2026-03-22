@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { AnimatedCounter } from "@/components/animations/AnimatedCounter";
 
@@ -5,14 +6,18 @@ interface AboutProps {
   text: string;
 }
 
-export function About({ text }: AboutProps) {
+export async function About({ text }: AboutProps) {
+  const t = await getTranslations("about");
+
   return (
     <section id="about" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         {/* Заголовок секции */}
         <ScrollReveal>
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">О себе</h2>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              {t("title")}
+            </h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
           </div>
         </ScrollReveal>
@@ -29,23 +34,33 @@ export function About({ text }: AboutProps) {
                   <div className="text-2xl font-bold text-purple-400">
                     <AnimatedCounter target={5} suffix="+" />
                   </div>
-                  <div className="mt-1 text-sm text-white/40">Лет опыта</div>
+                  <div className="mt-1 text-sm text-white/40">
+                    {t("experience")}
+                  </div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-blue-400">
                     <AnimatedCounter target={20} suffix="+" />
                   </div>
-                  <div className="mt-1 text-sm text-white/40">Проектов</div>
+                  <div className="mt-1 text-sm text-white/40">
+                    {t("projects_count")}
+                  </div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-cyan-400">
                     <AnimatedCounter target={4} />
                   </div>
-                  <div className="mt-1 text-sm text-white/40">Фреймворка</div>
+                  <div className="mt-1 text-sm text-white/40">
+                    {t("frameworks")}
+                  </div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-green-400">∞</div>
-                  <div className="mt-1 text-sm text-white/40">Мотивация</div>
+                  <div className="text-2xl font-bold text-green-400">
+                    &infin;
+                  </div>
+                  <div className="mt-1 text-sm text-white/40">
+                    {t("motivation")}
+                  </div>
                 </div>
               </div>
             </div>

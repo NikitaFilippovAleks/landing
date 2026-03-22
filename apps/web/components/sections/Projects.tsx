@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Project } from "@portfolio/shared-types";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
@@ -8,7 +9,9 @@ interface ProjectsProps {
   projects: Project[];
 }
 
-export function Projects({ projects }: ProjectsProps) {
+export async function Projects({ projects }: ProjectsProps) {
+  const t = await getTranslations("projects");
+
   // Выделенные проекты первыми
   const sorted = [...projects].sort(
     (a, b) => (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0),
@@ -22,7 +25,9 @@ export function Projects({ projects }: ProjectsProps) {
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Проекты</h2>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              {t("title")}
+            </h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
           </div>
         </ScrollReveal>

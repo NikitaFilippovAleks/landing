@@ -15,7 +15,8 @@
     "terminal_line1": "const developer = new Developer();",
     "terminal_line2": "developer.skills = ['React', 'Next.js', 'Flutter', 'TypeScript'];",
     "terminal_line3": "developer.passion = 'Building beautiful interfaces';",
-    "terminal_line4": "developer.status = 'Open to opportunities ✨';"
+    "terminal_line4": "developer.status = 'Open to opportunities ✨';",
+    "terminal_status": "Open to opportunities ✨"
   },
   "about": {
     "title": "About",

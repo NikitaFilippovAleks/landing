@@ -20,7 +20,8 @@ export function useAuth() {
       }
 
       try {
-        const res = await fetch("http://localhost:8000/api/v1/auth/refresh", {
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        const res = await fetch(`${apiUrl}/api/v1/auth/refresh`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh_token: refresh }),

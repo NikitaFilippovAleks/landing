@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Skill } from "@portfolio/shared-types";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { StaggerContainer } from "@/components/animations/StaggerContainer";
@@ -25,7 +26,9 @@ interface SkillsProps {
   skills: Skill[];
 }
 
-export function Skills({ skills }: SkillsProps) {
+export async function Skills({ skills }: SkillsProps) {
+  const t = await getTranslations("skills");
+
   // Группируем навыки по категориям
   const grouped = skills.reduce(
     (acc, skill) => {
@@ -44,7 +47,9 @@ export function Skills({ skills }: SkillsProps) {
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Навыки</h2>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              {t("title")}
+            </h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
           </div>
         </ScrollReveal>

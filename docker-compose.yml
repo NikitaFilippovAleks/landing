@@ -1,0 +1,70 @@
+# Prod-конфигурация для деплоя на VPS (Dockploy)
+# Образы собираются в GitHub Actions и пушатся в ghcr.io
+#
+# Перед запуском создайте .env файл:
+#   DATABASE_URL=postgresql+asyncpg://portfolio:STRONG_PASSWORD@db:5432/portfolio
+#   POSTGRES_PASSWORD=STRONG_PASSWORD
+#   SECRET_KEY=your-production-secret-key
+#   REVALIDATE_SECRET=your-revalidation-secret
+#   API_URL=http://api:8000
+#   VITE_API_URL=https://api.yourdomain.com
+
+services:
+  api:
+    image: ghcr.io/nikitafilippovaleks/portfolio-api:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - REVALIDATE_SECRET=${REVALIDATE_SECRET}
+      - NEXTJS_REVALIDATE_URL=http://web:3000/api/revalidate
+      - DEBUG=false
+    networks:
+      - app
+
+  web:
+    image: ghcr.io/nikitafilippovaleks/portfolio-web:latest
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api:8000
+    ports:
+      - "3000:3000"
+    networks:
+      - app
+
+  admin:
+    image: ghcr.io/nikitafilippovaleks/portfolio-admin:latest
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    networks:
+      - app
+
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: portfolio
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app
+
+volumes:
+  pgdata:
+
+networks:
+  app:
+    driver: bridge

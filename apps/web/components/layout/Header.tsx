@@ -1,14 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 
-const NAV_ITEMS = [
-  { label: "О себе", href: "#about", id: "about" },
-  { label: "Навыки", href: "#skills", id: "skills" },
-  { label: "Проекты", href: "#projects", id: "projects" },
-  { label: "Контакты", href: "#contacts", id: "contacts" },
+// Ключи навигации — лейблы берутся из переводов
+const NAV_KEYS = [
+  { key: "about", href: "#about", id: "about" },
+  { key: "skills", href: "#skills", id: "skills" },
+  { key: "projects", href: "#projects", id: "projects" },
+  { key: "contacts", href: "#contacts", id: "contacts" },
 ];
 
 export function Header() {
@@ -16,6 +19,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const activeSection = useActiveSection();
   const { scrollY } = useScroll();
+  const t = useTranslations("nav");
 
   // Изменение прозрачности фона при скролле
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -41,7 +45,7 @@ export function Header() {
 
         {/* Десктопная навигация с индикатором активной секции */}
         <ul className="hidden items-center gap-8 md:flex">
-          {NAV_ITEMS.map((item) => (
+          {NAV_KEYS.map((item) => (
             <li key={item.href} className="relative">
               <a
                 href={item.href}
@@ -51,7 +55,7 @@ export function Header() {
                     : "text-white/60 hover:text-white"
                 }`}
               >
-                {item.label}
+                {t(item.key)}
               </a>
               {/* Анимированный индикатор активной секции */}
               {activeSection === item.id && (
@@ -65,19 +69,22 @@ export function Header() {
           ))}
         </ul>
 
-        {/* CTA */}
-        <a
-          href="#contacts"
-          className="hidden rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90 md:block"
-        >
-          Связаться
-        </a>
+        {/* Правая часть: переключатель языка + CTA */}
+        <div className="hidden items-center gap-3 md:flex">
+          <LocaleSwitcher />
+          <a
+            href="#contacts"
+            className="rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
+          >
+            {t("cta")}
+          </a>
+        </div>
 
         {/* Мобильное меню — кнопка */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="flex flex-col gap-1.5 md:hidden"
-          aria-label="Меню"
+          aria-label="Menu"
         >
           <span
             className={`h-0.5 w-6 bg-white transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
@@ -95,7 +102,7 @@ export function Header() {
       {mobileOpen && (
         <div className="border-t border-white/5 bg-[#0a0a0f]/95 backdrop-blur-xl md:hidden">
           <ul className="flex flex-col gap-4 px-6 py-6">
-            {NAV_ITEMS.map((item) => (
+            {NAV_KEYS.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -106,11 +113,15 @@ export function Header() {
                       : "text-white/80"
                   }`}
                 >
-                  {item.label}
+                  {t(item.key)}
                 </a>
               </li>
             ))}
           </ul>
+          {/* Переключатель языка в мобильном меню */}
+          <div className="border-t border-white/5 px-6 py-4">
+            <LocaleSwitcher />
+          </div>
         </div>
       )}
     </header>

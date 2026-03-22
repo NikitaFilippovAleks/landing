@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { SceneContainer } from "@/components/three/SceneContainer";
 import { TypeWriter } from "@/components/animations/TypeWriter";
 import { Terminal } from "@/components/animations/Terminal";
@@ -8,27 +9,29 @@ interface HeroProps {
   subtitle: string;
 }
 
-// Фразы для TypeWriter — циклически набираются и стираются
-const TYPEWRITER_PHRASES = [
-  "Создаю современные веб-приложения",
-  "Разрабатываю мобильные приложения",
-  "Проектирую интерактивные интерфейсы",
-  "Пишу чистый и поддерживаемый код",
-];
+export async function Hero({ title, subtitle }: HeroProps) {
+  const t = await getTranslations("hero");
 
-// Строки для терминала
-const TERMINAL_LINES = [
-  { prompt: "$ ", text: "whoami" },
-  { text: "Frontend & Mobile Developer", highlight: true },
-  { prompt: "$ ", text: "cat skills.json" },
-  { text: '{ "frontend": ["React", "Next.js", "TypeScript"],' },
-  { text: '  "mobile": ["Flutter", "React Native"],' },
-  { text: '  "backend": ["Node.js", "NestJS", "Python"] }' },
-  { prompt: "$ ", text: "echo $STATUS" },
-  { text: "Открыт к предложениям ✨", highlight: true },
-];
+  // Фразы для TypeWriter из переводов
+  const typewriterPhrases = [
+    t("typewriter.0"),
+    t("typewriter.1"),
+    t("typewriter.2"),
+    t("typewriter.3"),
+  ];
 
-export function Hero({ title, subtitle }: HeroProps) {
+  // Строки для терминала
+  const terminalLines = [
+    { prompt: "$ ", text: "whoami" },
+    { text: "Frontend & Mobile Developer", highlight: true },
+    { prompt: "$ ", text: "cat skills.json" },
+    { text: '{ "frontend": ["React", "Next.js", "TypeScript"],' },
+    { text: '  "mobile": ["Flutter", "React Native"],' },
+    { text: '  "backend": ["Node.js", "NestJS", "Python"] }' },
+    { prompt: "$ ", text: "echo $STATUS" },
+    { text: t("terminal_status"), highlight: true },
+  ];
+
   return (
     <section
       id="hero"
@@ -54,9 +57,7 @@ export function Hero({ title, subtitle }: HeroProps) {
             {/* Бейдж */}
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-              <span className="text-sm text-white/60">
-                Открыт к предложениям
-              </span>
+              <span className="text-sm text-white/60">{t("badge")}</span>
             </div>
 
             {/* Заголовок — серверный компонент для SEO */}
@@ -69,7 +70,7 @@ export function Hero({ title, subtitle }: HeroProps) {
             {/* TypeWriter — клиентский компонент */}
             <div className="mx-auto mb-10 h-8 max-w-2xl lg:mx-0">
               <TypeWriter
-                phrases={TYPEWRITER_PHRASES}
+                phrases={typewriterPhrases}
                 className="text-lg text-white/60 sm:text-xl"
               />
             </div>
@@ -83,7 +84,7 @@ export function Hero({ title, subtitle }: HeroProps) {
 
           {/* Правая колонка — терминал (скрыт на мобильных) */}
           <div className="hidden lg:block">
-            <Terminal lines={TERMINAL_LINES} className="w-full" />
+            <Terminal lines={terminalLines} className="w-full" />
           </div>
         </div>
       </div>

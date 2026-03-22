@@ -1,0 +1,23 @@
+{
+  "name": "Portfolio — API",
+  "dockerComposeFile": ["../../docker-compose.dev.yml"],
+  "service": "api",
+  "workspaceFolder": "/workspace/apps/api",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "mikestead.dotenv"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "python.languageServer": "Pylance",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "forwardPorts": [8000],
+  "postCreateCommand": "pip install -r requirements.txt",
+  "remoteUser": "root"
+}

@@ -16,7 +16,8 @@
     "@react-three/fiber": "^9",
     "@react-three/drei": "^10",
     "@react-three/postprocessing": "^3",
-    "three": "^0.172"
+    "three": "^0.172",
+    "next-intl": "^4"
   },
   "devDependencies": {
     "@types/node": "^22",

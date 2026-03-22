@@ -7,7 +7,9 @@ import {
   clearTokens,
 } from "./auth";
 
-const API_URL = "http://localhost:8000";
+// В dev: VITE_API_URL=http://localhost:8000 (из docker-compose.dev.yml)
+// В prod: VITE_API_URL задаётся при сборке образа (GitHub Actions)
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 // ---------- Базовый fetch с авторизацией ----------
 
@@ -28,15 +30,22 @@ async function fetchApi<T>(
   let res = await fetch(`${API_URL}${path}`, { ...options, headers });
 
   // Если 401 — пробуем обновить access token через refresh
-  if (res.status === 401 && getRefreshToken()) {
-    const refreshed = await refreshAccessToken();
-    if (refreshed) {
-      headers["Authorization"] = `Bearer ${getAccessToken()}`;
-      res = await fetch(`${API_URL}${path}`, { ...options, headers });
+  if (res.status === 401) {
+    if (getRefreshToken()) {
+      const refreshed = await refreshAccessToken();
+      if (refreshed) {
+        headers["Authorization"] = `Bearer ${getAccessToken()}`;
+        res = await fetch(`${API_URL}${path}`, { ...options, headers });
+      } else {
+        clearTokens();
+        window.location.href = "/login";
+        throw new Error("Сессия истекла");
+      }
     } else {
+      // Нет refresh token — сессия недействительна
       clearTokens();
       window.location.href = "/login";
-      throw new Error("Сессия истекла");
+      throw new Error("Требуется авторизация");
     }
   }
 

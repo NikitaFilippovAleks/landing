@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -8,6 +8,16 @@ from app.models.user import User
 from app.services.auth import decode_token
 
 security = HTTPBearer()
+
+# Поддерживаемые локали
+SUPPORTED_LOCALES = ("ru", "en")
+
+
+def get_locale(locale: str = Query("en", description="Локаль: ru или en")) -> str:
+    """Зависимость: извлекает и валидирует locale из query-параметра."""
+    if locale not in SUPPORTED_LOCALES:
+        locale = "en"
+    return locale
 
 
 async def get_current_user(

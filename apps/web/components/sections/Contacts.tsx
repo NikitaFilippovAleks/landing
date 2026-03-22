@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { SocialLink } from "./SocialLink";
 
@@ -38,12 +39,14 @@ const SOCIAL_LINKS = [
   },
 ];
 
-export function Contacts({
+export async function Contacts({
   email,
   githubUrl,
   telegramUrl,
   linkedinUrl,
 }: ContactsProps) {
+  const t = await getTranslations("contacts");
+
   const urlMap: Record<string, string> = {
     github: githubUrl,
     telegram: telegramUrl,
@@ -61,7 +64,9 @@ export function Contacts({
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
           <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Контакты</h2>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+              {t("title")}
+            </h2>
             <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
           </div>
         </ScrollReveal>
@@ -69,9 +74,7 @@ export function Contacts({
         <ScrollReveal delay={0.15}>
           <div className="mx-auto max-w-lg text-center">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
-              <p className="mb-8 text-white/60">
-                Готов обсудить ваш проект или предложение о сотрудничестве
-              </p>
+              <p className="mb-8 text-white/60">{t("subtitle")}</p>
 
               {/* Email */}
               {email && (

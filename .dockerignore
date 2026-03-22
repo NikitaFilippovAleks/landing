@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+.pnpm-store
+__pycache__
+*.pyc
+.env
+.env.local
+.git
+.github
+.devcontainer
+.vscode
+*.md
+LICENSE

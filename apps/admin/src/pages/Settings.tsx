@@ -25,10 +25,17 @@ export function Settings() {
 
   // Синхронизация формы с данными из API (только при первой загрузке)
   useEffect(() => {
-    if (settings.length > 0 && Object.keys(formValues).length === 0) {
+    if (Object.keys(formValues).length === 0) {
       const values: Record<string, string> = {};
+      // Инициализируем все ключи из SETTING_LABELS (пустые строки по умолчанию)
+      Object.keys(SETTING_LABELS).forEach((key) => {
+        values[key] = "";
+      });
+      // Перезаписываем значениями из API (если есть)
       settings.forEach((s) => {
-        values[s.key] = s.value;
+        if (s.key in values) {
+          values[s.key] = s.value;
+        }
       });
       setFormValues(values);
     }
@@ -74,46 +81,45 @@ export function Settings() {
           {/* Рендерим в фиксированном порядке из SETTING_LABELS, чтобы при сохранении порядок не менялся */}
           {Object.entries(SETTING_LABELS).map(([key, config]) => {
             const setting = settings.find((s) => s.key === key);
-            if (!setting) return null;
-            const label = config.label;
-            const isMultiline = config.multiline;
-            const isSaved = savedKeys.has(setting.key);
-            const isChanged = formValues[setting.key] !== setting.value;
+            const currentValue = formValues[key] ?? "";
+            const savedValue = setting?.value ?? "";
+            const isSaved = savedKeys.has(key);
+            const isChanged = currentValue !== savedValue;
 
             return (
               <div
-                key={setting.key}
+                key={key}
                 className="rounded-xl border border-white/10 bg-gray-900 p-5"
               >
                 <div className="mb-2 flex items-center justify-between">
                   <label className="text-sm font-medium text-white/70">
-                    {label}
+                    {config.label}
                   </label>
-                  <span className="text-xs text-white/30">{setting.key}</span>
+                  <span className="text-xs text-white/30">{key}</span>
                 </div>
 
                 <div className="flex gap-3">
-                  {isMultiline ? (
+                  {config.multiline ? (
                     <textarea
-                      value={formValues[setting.key] || ""}
+                      value={currentValue}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, [setting.key]: e.target.value })
+                        setFormValues({ ...formValues, [key]: e.target.value })
                       }
                       rows={4}
                       className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-purple-500/50 resize-none"
                     />
                   ) : (
                     <input
-                      value={formValues[setting.key] || ""}
+                      value={currentValue}
                       onChange={(e) =>
-                        setFormValues({ ...formValues, [setting.key]: e.target.value })
+                        setFormValues({ ...formValues, [key]: e.target.value })
                       }
                       className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-purple-500/50"
                     />
                   )}
 
                   <button
-                    onClick={() => handleSave(setting.key)}
+                    onClick={() => handleSave(key)}
                     disabled={!isChanged || updateMut.isPending}
                     className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
                       isSaved

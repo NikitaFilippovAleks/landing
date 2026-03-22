@@ -17,12 +17,12 @@ const FALLBACK_SETTINGS = {
   linkedin_url: "",
 };
 
-async function getPortfolioData() {
+async function getPortfolioData(locale: string) {
   try {
     const [skills, projects, settings] = await Promise.all([
-      getSkills(),
-      getProjects(),
-      getSettings(),
+      getSkills(locale),
+      getProjects(locale),
+      getSettings(locale),
     ]);
     return { skills, projects, settings };
   } catch {
@@ -35,8 +35,13 @@ async function getPortfolioData() {
   }
 }
 
-export default async function Home() {
-  const { skills, projects, settings } = await getPortfolioData();
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const { skills, projects, settings } = await getPortfolioData(locale);
 
   return (
     <main>
