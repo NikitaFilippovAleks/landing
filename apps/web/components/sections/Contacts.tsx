@@ -59,7 +59,7 @@ export async function Contacts({
   return (
     <section id="contacts" className="relative py-24 sm:py-32">
       {/* Фоновое свечение */}
-      <div className="pointer-events-none absolute bottom-0 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-purple-500/5 blur-[128px]" />
+      <div className="pointer-events-none absolute bottom-0 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-violet-500/5 blur-[128px]" />
 
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
@@ -67,20 +67,20 @@ export async function Contacts({
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
               {t("title")}
             </h2>
-            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
+            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-orange-500" />
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.15}>
           <div className="mx-auto max-w-lg text-center">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+            <div className="rounded-2xl border border-violet-500/10 bg-violet-500/[0.04] p-8 backdrop-blur-sm">
               <p className="mb-8 text-white/60">{t("subtitle")}</p>
 
               {/* Email */}
               {email && (
                 <a
                   href={`mailto:${email}`}
-                  className="mb-8 inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-8 py-4 text-lg font-medium transition-all hover:shadow-lg hover:shadow-purple-500/25"
+                  className="mb-8 inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-8 py-4 text-lg font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25"
                 >
                   <svg
                     width="20"

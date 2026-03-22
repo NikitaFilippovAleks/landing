@@ -30,14 +30,14 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-xl transition-colors duration-300 ${
         scrolled
-          ? "border-white/10 bg-[#0a0a0f]/95"
-          : "border-white/5 bg-[#0a0a0f]/80"
+          ? "border-white/10 bg-[#050510]/95"
+          : "border-white/5 bg-[#050510]/80"
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Логотип */}
         <a href="#" className="text-lg font-bold tracking-tight">
-          <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">
             NF
           </span>
           <span className="text-white/60">.dev</span>
@@ -61,7 +61,7 @@ export function Header() {
               {activeSection === item.id && (
                 <motion.div
                   layoutId="activeNav"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-violet-400 to-orange-400"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -74,7 +74,7 @@ export function Header() {
           <LocaleSwitcher />
           <a
             href="#contacts"
-            className="rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
+            className="rounded-lg bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90"
           >
             {t("cta")}
           </a>
@@ -100,7 +100,7 @@ export function Header() {
 
       {/* Мобильное меню — выпадающее */}
       {mobileOpen && (
-        <div className="border-t border-white/5 bg-[#0a0a0f]/95 backdrop-blur-xl md:hidden">
+        <div className="border-t border-white/5 bg-[#050510]/95 backdrop-blur-xl md:hidden">
           <ul className="flex flex-col gap-4 px-6 py-6">
             {NAV_KEYS.map((item) => (
               <li key={item.href}>

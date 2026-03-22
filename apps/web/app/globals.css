@@ -1,12 +1,19 @@
 @import "tailwindcss";
 
-/* Мигающий курсор для TypeWriter и Terminal */
+/* === Кастомный курсор: скрыть нативный на desktop === */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* === Мигающий курсор для TypeWriter и Terminal === */
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
 }
 
-/* Плавающие blob-ы для мобильного фоллбека */
+/* === Плавающие blob-ы для мобильного фоллбека === */
 @keyframes float-blob {
   0%, 100% { transform: translate(0, 0) scale(1); }
   25% { transform: translate(30px, -40px) scale(1.05); }
@@ -27,7 +34,7 @@
   66% { transform: translate(-55%, -45%) scale(0.94); }
 }
 
-/* Утилитарные классы для анимаций */
+/* === Утилитарные классы для анимаций === */
 @utility animate-blink {
   animation: blink 0.8s step-end infinite;
 }
@@ -44,11 +51,16 @@
   animation: float-blob-slow 15s ease-in-out infinite;
 }
 
-/* Отключение анимаций для пользователей с prefers-reduced-motion */
+/* === Отключение анимаций для пользователей с prefers-reduced-motion === */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* Возвращаем нативный курсор при reduced motion */
+  * {
+    cursor: auto !important;
   }
 }

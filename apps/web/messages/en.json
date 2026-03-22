@@ -26,7 +26,12 @@
     "motivation": "Motivation"
   },
   "skills": {
-    "title": "Skills"
+    "title": "Skills",
+    "filter_all": "All",
+    "filter_frontend": "Frontend",
+    "filter_mobile": "Mobile",
+    "filter_backend": "Backend",
+    "filter_devops": "DevOps"
   },
   "projects": {
     "title": "Projects",

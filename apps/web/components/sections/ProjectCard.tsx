@@ -18,18 +18,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <motion.div
       whileHover={{
         y: -6,
-        boxShadow: "0 20px 40px rgba(139, 92, 246, 0.12)",
+        boxShadow: "0 20px 40px rgba(124, 58, 237, 0.15)",
       }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/[0.07]"
+      className="group relative h-full overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-sm transition-colors hover:border-violet-500/30 hover:bg-white/[0.06]"
     >
       {/* Превью-изображение */}
       {project.image_url && (
-        <div className="aspect-video overflow-hidden border-b border-white/5">
+        <div className="relative aspect-video overflow-hidden border-b border-white/5">
+          {/* Градиентный overlay поверх изображения */}
+          <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#050510] via-transparent to-transparent" />
           <img
             src={project.image_url}
             alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         </div>
       )}
@@ -37,7 +39,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="p-6">
         {/* Featured бейдж */}
         {project.is_featured && (
-          <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 px-3 py-1 text-xs font-medium text-purple-300">
+          <span className="mb-3 inline-block rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 px-3 py-1 text-xs font-medium text-violet-300">
             {t("featured")}
           </span>
         )}
@@ -55,7 +57,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-white/5 bg-white/5 px-2.5 py-1 text-xs text-white/50"
+              className="rounded-full border border-violet-500/10 bg-violet-500/[0.06] px-3 py-1 text-xs text-violet-300/70"
             >
               {tag}
             </span>

@@ -4,11 +4,12 @@ import { Canvas } from "@react-three/fiber";
 import { AdaptiveDpr } from "@react-three/drei";
 import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
 import { ParticleField } from "./ParticleField";
-import { FloatingGeometry } from "./FloatingGeometry";
+import { NoiseSphere } from "./NoiseSphere";
 
 /**
  * Основная 3D-сцена для Hero-секции.
- * Canvas с частицами, плавающей геометрией и постобработкой.
+ * Центральный объект — NoiseSphere, окружённая частицами.
+ * Усиленный Bloom для неонового свечения.
  */
 export function HeroScene() {
   return (
@@ -26,18 +27,23 @@ export function HeroScene() {
       {/* Автоматическое снижение DPR при просадках FPS */}
       <AdaptiveDpr pixelated />
 
+      {/* Освещение для NoiseSphere */}
+      <ambientLight intensity={0.3} />
+      <pointLight position={[5, 5, 5]} intensity={1} color="#A855F7" />
+      <pointLight position={[-5, -3, 3]} intensity={0.5} color="#F97316" />
+
+      {/* Интерактивная noise sphere */}
+      <NoiseSphere />
+
       {/* Два слоя частиц */}
       <ParticleField />
 
-      {/* Wireframe-фигуры */}
-      <FloatingGeometry />
-
-      {/* Постобработка: свечение + лёгкий шум */}
+      {/* Постобработка: усиленное свечение + лёгкий шум */}
       <EffectComposer>
         <Bloom
-          luminanceThreshold={0.6}
+          luminanceThreshold={0.4}
           luminanceSmoothing={0.9}
-          intensity={0.4}
+          intensity={0.6}
         />
         <Noise opacity={0.03} />
       </EffectComposer>

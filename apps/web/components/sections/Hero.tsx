@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { SceneContainer } from "@/components/three/SceneContainer";
 import { TypeWriter } from "@/components/animations/TypeWriter";
-import { Terminal } from "@/components/animations/Terminal";
 import { HeroButtons } from "./HeroButtons";
 
 interface HeroProps {
@@ -9,6 +8,10 @@ interface HeroProps {
   subtitle: string;
 }
 
+/**
+ * Hero-секция — полноэкранная, тёмная, с 3D NoiseSphere.
+ * Стиль вдохновлён Loris Bukvic: крупная типография + 3D-объект + неоновые свечения.
+ */
 export async function Hero({ title, subtitle }: HeroProps) {
   const t = await getTranslations("hero");
 
@@ -20,29 +23,21 @@ export async function Hero({ title, subtitle }: HeroProps) {
     t("typewriter.3"),
   ];
 
-  // Строки для терминала
-  const terminalLines = [
-    { prompt: "$ ", text: "whoami" },
-    { text: "Frontend & Mobile Developer", highlight: true },
-    { prompt: "$ ", text: "cat skills.json" },
-    { text: '{ "frontend": ["React", "Next.js", "TypeScript"],' },
-    { text: '  "mobile": ["Flutter", "React Native"],' },
-    { text: '  "backend": ["Node.js", "NestJS", "Python"] }' },
-    { prompt: "$ ", text: "echo $STATUS" },
-    { text: t("terminal_status"), highlight: true },
-  ];
-
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen items-center overflow-hidden"
     >
       {/* 3D-сцена (desktop) или CSS blob-анимация (mobile) */}
       <SceneContainer />
 
+      {/* Неоновое свечение за 3D-объектом (сдвинуто правее) */}
+      <div className="pointer-events-none absolute left-[55%] top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-violet-500/15 blur-[200px]" />
+      <div className="pointer-events-none absolute left-[65%] top-[35%] h-[250px] w-[250px] rounded-full bg-orange-500/8 blur-[150px]" />
+
       {/* Сетка на фоне */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
@@ -50,42 +45,39 @@ export async function Hero({ title, subtitle }: HeroProps) {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Левая колонка — текст */}
-          <div className="text-center lg:text-left">
-            {/* Бейдж */}
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-              <span className="text-sm text-white/60">{t("badge")}</span>
-            </div>
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        <div className="max-w-xl lg:ml-0">
+          {/* Бейдж */}
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/[0.06] px-4 py-2 backdrop-blur-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+            <span className="text-sm text-white/60">{t("badge")}</span>
+          </div>
 
-            {/* Заголовок — серверный компонент для SEO */}
-            <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">
-              <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                {title}
+          {/* Заголовок — крупный, Space Grotesk */}
+          <h1 className="mb-6 font-[family-name:var(--font-display)] text-[clamp(3rem,6vw,5.5rem)] font-bold leading-[0.95] tracking-tighter">
+            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-orange-400 bg-clip-text text-transparent">
+              {title}
+            </span>
+          </h1>
+
+          {/* TypeWriter — стилизован как терминальная строка */}
+          <div className="mb-10 h-8">
+            <div className="flex items-center gap-2">
+              <span className="font-[family-name:var(--font-mono)] text-violet-400/60">
+                {">"}_
               </span>
-            </h1>
-
-            {/* TypeWriter — клиентский компонент */}
-            <div className="mx-auto mb-10 h-8 max-w-2xl lg:mx-0">
               <TypeWriter
                 phrases={typewriterPhrases}
-                className="text-lg text-white/60 sm:text-xl"
+                className="font-[family-name:var(--font-mono)] text-lg text-cyan-400/80 sm:text-xl"
               />
             </div>
-
-            {/* Скрытый текст для SEO (TypeWriter его не покажет поисковикам) */}
-            <p className="sr-only">{subtitle}</p>
-
-            {/* CTA-кнопки — клиентский компонент для hover-анимаций */}
-            <HeroButtons />
           </div>
 
-          {/* Правая колонка — терминал (скрыт на мобильных) */}
-          <div className="hidden lg:block">
-            <Terminal lines={terminalLines} className="w-full" />
-          </div>
+          {/* Скрытый текст для SEO */}
+          <p className="sr-only">{subtitle}</p>
+
+          {/* CTA-кнопки */}
+          <HeroButtons />
         </div>
       </div>
 

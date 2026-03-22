@@ -1,12 +1,31 @@
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LenisProvider } from "@/components/providers/LenisProvider";
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { routing } from "@/i18n/routing";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+// Шрифты
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-mono",
+  weight: ["400", "500"],
+});
 
 // Генерация метаданных с учётом локали
 export async function generateMetadata({
@@ -57,10 +76,18 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <Header />
-      {children}
-      <Footer />
-    </NextIntlClientProvider>
+    <div
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans`}
+    >
+      <NextIntlClientProvider messages={messages}>
+        <LenisProvider>
+          <LoadingScreen />
+          <CustomCursor />
+          <Header />
+          {children}
+          <Footer />
+        </LenisProvider>
+      </NextIntlClientProvider>
+    </div>
   );
 }

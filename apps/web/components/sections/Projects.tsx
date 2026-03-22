@@ -20,7 +20,7 @@ export async function Projects({ projects }: ProjectsProps) {
   return (
     <section id="projects" className="relative py-24 sm:py-32">
       {/* Фоновое свечение */}
-      <div className="pointer-events-none absolute left-0 top-1/3 h-96 w-96 rounded-full bg-blue-500/5 blur-[128px]" />
+      <div className="pointer-events-none absolute left-0 top-1/3 h-96 w-96 rounded-full bg-violet-500/5 blur-[128px]" />
 
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
@@ -28,7 +28,7 @@ export async function Projects({ projects }: ProjectsProps) {
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
               {t("title")}
             </h2>
-            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
+            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-orange-500" />
           </div>
         </ScrollReveal>
 

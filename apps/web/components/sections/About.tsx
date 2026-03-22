@@ -6,6 +6,10 @@ interface AboutProps {
   text: string;
 }
 
+/**
+ * Секция "О себе" — open layout без glassmorphism.
+ * Текст слева, цифровой дашборд справа.
+ */
 export async function About({ text }: AboutProps) {
   const t = await getTranslations("about");
 
@@ -18,49 +22,59 @@ export async function About({ text }: AboutProps) {
             <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
               {t("title")}
             </h2>
-            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
+            <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-violet-500 to-orange-500" />
           </div>
         </ScrollReveal>
 
-        <div className="mx-auto max-w-3xl">
-          {/* Glassmorphism-карточка */}
-          <ScrollReveal delay={0.15}>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm sm:p-10">
-              <p className="text-lg leading-relaxed text-white/70">{text}</p>
+        {/* Open layout: текст + дашборд */}
+        <div className="grid items-start gap-12 lg:grid-cols-12">
+          {/* Левая часть — текст о себе */}
+          <ScrollReveal delay={0.15} className="lg:col-span-7">
+            <p className="font-[family-name:var(--font-display)] text-xl leading-relaxed text-white/70 sm:text-2xl">
+              {text}
+            </p>
+          </ScrollReveal>
 
-              {/* Статистика с анимированными счётчиками */}
-              <div className="mt-8 grid grid-cols-2 gap-6 border-t border-white/5 pt-8 sm:grid-cols-4">
-                <div>
-                  <div className="text-2xl font-bold text-purple-400">
-                    <AnimatedCounter target={5} suffix="+" />
-                  </div>
-                  <div className="mt-1 text-sm text-white/40">
-                    {t("experience")}
-                  </div>
+          {/* Правая часть — цифровой дашборд */}
+          <ScrollReveal delay={0.3} className="lg:col-span-5">
+            <div className="grid grid-cols-2 gap-4">
+              {/* Опыт */}
+              <div className="rounded-xl border border-violet-500/10 bg-violet-500/[0.04] p-5">
+                <div className="mb-1 font-[family-name:var(--font-display)] text-3xl font-bold text-violet-400">
+                  <AnimatedCounter target={5} suffix="+" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-blue-400">
-                    <AnimatedCounter target={20} suffix="+" />
-                  </div>
-                  <div className="mt-1 text-sm text-white/40">
-                    {t("projects_count")}
-                  </div>
+                <div className="text-sm text-white/40">
+                  {t("experience")}
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-cyan-400">
-                    <AnimatedCounter target={4} />
-                  </div>
-                  <div className="mt-1 text-sm text-white/40">
-                    {t("frameworks")}
-                  </div>
+              </div>
+
+              {/* Проекты */}
+              <div className="rounded-xl border border-orange-500/10 bg-orange-500/[0.04] p-5">
+                <div className="mb-1 font-[family-name:var(--font-display)] text-3xl font-bold text-orange-400">
+                  <AnimatedCounter target={20} suffix="+" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-400">
-                    &infin;
-                  </div>
-                  <div className="mt-1 text-sm text-white/40">
-                    {t("motivation")}
-                  </div>
+                <div className="text-sm text-white/40">
+                  {t("projects_count")}
+                </div>
+              </div>
+
+              {/* Фреймворки */}
+              <div className="rounded-xl border border-cyan-500/10 bg-cyan-500/[0.04] p-5">
+                <div className="mb-1 font-[family-name:var(--font-display)] text-3xl font-bold text-cyan-400">
+                  <AnimatedCounter target={4} />
+                </div>
+                <div className="text-sm text-white/40">
+                  {t("frameworks")}
+                </div>
+              </div>
+
+              {/* Мотивация */}
+              <div className="rounded-xl border border-emerald-500/10 bg-emerald-500/[0.04] p-5">
+                <div className="mb-1 font-[family-name:var(--font-display)] text-3xl font-bold text-emerald-400">
+                  &infin;
+                </div>
+                <div className="text-sm text-white/40">
+                  {t("motivation")}
                 </div>
               </div>
             </div>

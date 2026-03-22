@@ -26,7 +26,12 @@
     "motivation": "Мотивация"
   },
   "skills": {
-    "title": "Навыки"
+    "title": "Навыки",
+    "filter_all": "Все",
+    "filter_frontend": "Frontend",
+    "filter_mobile": "Mobile",
+    "filter_backend": "Backend",
+    "filter_devops": "DevOps"
   },
   "projects": {
     "title": "Проекты",

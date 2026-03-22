@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html className="dark scroll-smooth">
-      <body className="bg-[#0a0a0f] text-white antialiased">{children}</body>
+      <body className="bg-[#050510] text-white antialiased">{children}</body>
     </html>
   );
 }
