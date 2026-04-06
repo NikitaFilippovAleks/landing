@@ -3,7 +3,7 @@ FROM node:24-bookworm AS dev
 
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10.12.1 --activate
 
 WORKDIR /workspace
 
@@ -30,7 +30,7 @@ FROM node:24-alpine AS deps
 
 ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10.12.1 --activate
 
 WORKDIR /app
 
