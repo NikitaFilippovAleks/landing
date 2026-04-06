@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@portfolio/shared-types": "workspace:*",
     "@react-three/drei": "^10",
     "@react-three/fiber": "^9",
     "@react-three/postprocessing": "^3",

@@ -52,9 +52,7 @@ export function ParticleField() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={1500}
-            array={purplePositions}
-            itemSize={3}
+            args={[purplePositions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
@@ -71,9 +69,7 @@ export function ParticleField() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={500}
-            array={cyanPositions}
-            itemSize={3}
+            args={[cyanPositions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial

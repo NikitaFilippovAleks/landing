@@ -45,6 +45,9 @@ FROM deps AS builder
 
 COPY . .
 
+# Пересоздаём workspace-ссылки после COPY (симлинки не сохраняются при копировании)
+RUN pnpm install --frozen-lockfile
+
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm --filter @portfolio/web build

@@ -45,6 +45,9 @@ FROM deps AS builder
 
 COPY . .
 
+# Пересоздаём workspace-ссылки после COPY (симлинки не сохраняются при копировании)
+RUN pnpm install --frozen-lockfile
+
 RUN pnpm --filter @portfolio/admin build
 
 # ===== Prod: финальный образ (nginx) =====
