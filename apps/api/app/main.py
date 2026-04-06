@@ -1,5 +1,3 @@
-import os
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,10 +14,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",   # Dev: Next.js лендинг
-        "http://localhost:3001",   # Dev: Vite админка
-        "http://web:3000",         # Docker: Next.js (SSR)
-        os.environ.get("CORS_ADMIN_ORIGIN", ""),  # Prod: публичный URL админки
+        # Лендинг: все запросы серверные (SSR/ISR), CORS не применяется
+        # Админка: same-origin через nginx proxy, CORS не нужен
     ],
     allow_credentials=True,
     allow_methods=["*"],

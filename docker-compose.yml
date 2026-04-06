@@ -1,13 +1,7 @@
-# Prod-конфигурация для деплоя на VPS (Dockploy)
+# Prod-конфигурация для деплоя на VPS (Dokploy)
 # Образы собираются в GitHub Actions и пушатся в ghcr.io
 #
-# Перед запуском создайте .env файл:
-#   DATABASE_URL=postgresql+asyncpg://portfolio:STRONG_PASSWORD@db:5432/portfolio
-#   POSTGRES_PASSWORD=STRONG_PASSWORD
-#   SECRET_KEY=your-production-secret-key
-#   REVALIDATE_SECRET=your-revalidation-secret
-#   API_URL=http://api:8000
-#   VITE_API_URL=https://api.yourdomain.com
+# Перед запуском создайте .env файл (см. .env.example)
 
 services:
   api:
@@ -33,7 +27,7 @@ services:
     environment:
       - API_URL=http://api:8000
     ports:
-      - "3000:3000"
+      - "${WEB_PORT:-3000}:3000"
     networks:
       - app
 
@@ -41,7 +35,7 @@ services:
     image: ghcr.io/nikitafilippovaleks/portfolio-admin:latest
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "${ADMIN_PORT:-3001}:3001"
     networks:
       - app
 

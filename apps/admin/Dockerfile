@@ -45,9 +45,6 @@ FROM deps AS builder
 
 COPY . .
 
-ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
-
 RUN pnpm --filter @portfolio/admin build
 
 # ===== Prod: финальный образ (nginx) =====

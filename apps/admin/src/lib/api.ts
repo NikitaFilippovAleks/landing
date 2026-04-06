@@ -7,9 +7,10 @@ import {
   clearTokens,
 } from "./auth";
 
-// В dev: VITE_API_URL=http://localhost:8000 (из docker-compose.dev.yml)
-// В prod: VITE_API_URL задаётся при сборке образа (GitHub Actions)
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Пустая строка = относительные пути → запросы идут на тот же домен
+// В dev: Vite proxy перенаправляет /api → http://localhost:8000
+// В prod: nginx proxy перенаправляет /api → http://api:8000
+const API_URL = "";
 
 // ---------- Базовый fetch с авторизацией ----------
 
