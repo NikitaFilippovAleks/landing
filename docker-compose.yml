@@ -26,16 +26,12 @@ services:
       - api
     environment:
       - API_URL=http://api:8000
-    ports:
-      - "${WEB_PORT:-3000}:3000"
     networks:
       - app
 
   admin:
     image: ghcr.io/nikitafilippovaleks/portfolio-admin:latest
     restart: unless-stopped
-    ports:
-      - "${ADMIN_PORT:-3001}:3001"
     networks:
       - app
 
