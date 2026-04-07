@@ -18,6 +18,7 @@ services:
       - DEBUG=false
     networks:
       - app
+      - dokploy-network
 
   web:
     image: ghcr.io/nikitafilippovaleks/portfolio-web:latest
@@ -28,12 +29,14 @@ services:
       - API_URL=http://api:8000
     networks:
       - app
+      - dokploy-network
 
   admin:
     image: ghcr.io/nikitafilippovaleks/portfolio-admin:latest
     restart: unless-stopped
     networks:
       - app
+      - dokploy-network
 
   db:
     image: postgres:18
@@ -58,3 +61,5 @@ volumes:
 networks:
   app:
     driver: bridge
+  dokploy-network:
+    external: true
