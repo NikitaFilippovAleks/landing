@@ -6,6 +6,7 @@
 services:
   api:
     image: ghcr.io/nikitafilippovaleks/portfolio-api:latest
+    pull_policy: always
     restart: unless-stopped
     depends_on:
       db:
@@ -22,6 +23,7 @@ services:
 
   web:
     image: ghcr.io/nikitafilippovaleks/portfolio-web:latest
+    pull_policy: always
     restart: unless-stopped
     depends_on:
       - api
@@ -33,6 +35,7 @@ services:
 
   admin:
     image: ghcr.io/nikitafilippovaleks/portfolio-admin:latest
+    pull_policy: always
     restart: unless-stopped
     networks:
       - app
