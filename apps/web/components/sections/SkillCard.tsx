@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Skill } from "@portfolio/shared-types";
 import {
@@ -53,13 +54,17 @@ const SKILL_MAP: Record<string, { icon: IconType; color: string }> = {
 
 interface SkillCardProps {
   skill: Skill;
+  /** Индекс для staggered-анимации появления */
+  index?: number;
 }
 
 /**
  * Карточка навыка с SVG-иконкой технологии и фирменным цветом бренда.
  * При hover: поднимается, появляется glow в фирменном цвете.
  */
-export function SkillCard({ skill }: SkillCardProps) {
+export function SkillCard({ skill, index = 0 }: SkillCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Нормализуем имя иконки для поиска в маппинге
   const iconKey = skill.icon?.toLowerCase().replace(/[\s.]/g, "") || skill.name.toLowerCase().replace(/[\s.]/g, "");
   const mapped = SKILL_MAP[iconKey] || SKILL_MAP[skill.name.toLowerCase().replace(/[\s.]/g, "")];
@@ -69,15 +74,19 @@ export function SkillCard({ skill }: SkillCardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.04,
+      }}
       whileHover={{
         y: -4,
         transition: { duration: 0.2 },
       }}
-      className="group relative flex flex-col items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/10 hover:bg-white/[0.06]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative flex flex-col items-center gap-3 rounded-xl border border-white/5 bg-white/3 p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/10 hover:bg-white/6"
       style={{
         // Glow-эффект при hover через CSS переменную
         "--glow-color": brandColor,
@@ -98,19 +107,10 @@ export function SkillCard({ skill }: SkillCardProps) {
             size={32}
             className="transition-all duration-300 group-hover:scale-110"
             style={{
-              color: `${brandColor}99`,
-              filter: "brightness(0.8)",
-            }}
-            // При hover — полный цвет
-            onMouseEnter={(e) => {
-              const target = e.currentTarget as SVGElement;
-              target.style.color = brandColor;
-              target.style.filter = "brightness(1) drop-shadow(0 0 8px " + brandColor + "40)";
-            }}
-            onMouseLeave={(e) => {
-              const target = e.currentTarget as SVGElement;
-              target.style.color = `${brandColor}99`;
-              target.style.filter = "brightness(0.8)";
+              color: isHovered ? brandColor : `${brandColor}99`,
+              filter: isHovered
+                ? `brightness(1) drop-shadow(0 0 8px ${brandColor}40)`
+                : "brightness(0.8)",
             }}
           />
         ) : (
