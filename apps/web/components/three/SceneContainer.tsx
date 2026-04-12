@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { MobileFallback } from "./MobileFallback";
@@ -16,10 +16,27 @@ const HeroScene = dynamic(() => import("./HeroScene").then((m) => m.HeroScene), 
  * - Desktop: полная 3D-сцена (React Three Fiber)
  * - Mobile / слабое устройство: CSS-анимация blob-ов
  * - prefers-reduced-motion: статичный градиентный фон
+ *
+ * 3D-рендеринг останавливается когда hero-секция не видна (frameloop="never").
  */
 export function SceneContainer() {
   const { isMobile, isLowPower } = useIsMobile();
   const prefersReduced = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  // Останавливаем 3D-рендеринг когда hero выходит из viewport
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Статичный фон для пользователей с reduced-motion
   if (prefersReduced) {
@@ -39,9 +56,9 @@ export function SceneContainer() {
 
   // Полная 3D-сцена для десктопа
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div ref={containerRef} className="pointer-events-none absolute inset-0">
       <Suspense fallback={<MobileFallback />}>
-        <HeroScene />
+        <HeroScene paused={!isVisible} />
       </Suspense>
     </div>
   );

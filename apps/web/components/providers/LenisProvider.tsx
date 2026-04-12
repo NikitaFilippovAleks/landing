@@ -26,15 +26,27 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     lenisRef.current = lenis;
 
-    // RAF-цикл для обновления Lenis
+    // RAF-цикл для обновления Lenis с остановкой при завершении скролла
+    let rafId: number;
+    let isScrolling = false;
+
+    lenis.on("scroll", () => {
+      isScrolling = true;
+    });
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      // Продолжаем RAF только пока Lenis анимирует скролл
+      if (isScrolling && !lenis.isScrolling) {
+        isScrolling = false;
+      }
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;
     };

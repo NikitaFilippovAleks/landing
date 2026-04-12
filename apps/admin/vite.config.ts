@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      // В dev-режиме проксируем API-запросы на бэкенд
-      "/api": "http://localhost:8000",
+      // Проксируем API-запросы на бэкенд-контейнер
+      "/api": "http://api:8000",
     },
   },
 });

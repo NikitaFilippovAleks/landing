@@ -2,20 +2,28 @@
 
 import { Canvas } from "@react-three/fiber";
 import { AdaptiveDpr } from "@react-three/drei";
-import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { ParticleField } from "./ParticleField";
 import { NoiseSphere } from "./NoiseSphere";
+
+interface HeroSceneProps {
+  paused?: boolean;
+}
 
 /**
  * Основная 3D-сцена для Hero-секции.
  * Центральный объект — NoiseSphere, окружённая частицами.
  * Усиленный Bloom для неонового свечения.
+ *
+ * При paused=true рендеринг останавливается (frameloop="never"),
+ * что полностью снимает GPU-нагрузку когда hero вне viewport.
  */
-export function HeroScene() {
+export function HeroScene({ paused = false }: HeroSceneProps) {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 60 }}
       dpr={[1, 1.5]}
+      frameloop={paused ? "never" : "always"}
       style={{
         position: "absolute",
         top: 0,
@@ -38,14 +46,13 @@ export function HeroScene() {
       {/* Два слоя частиц */}
       <ParticleField />
 
-      {/* Постобработка: усиленное свечение + лёгкий шум */}
+      {/* Постобработка: Bloom для неонового свечения */}
       <EffectComposer>
         <Bloom
           luminanceThreshold={0.4}
           luminanceSmoothing={0.9}
           intensity={0.6}
         />
-        <Noise opacity={0.03} />
       </EffectComposer>
     </Canvas>
   );

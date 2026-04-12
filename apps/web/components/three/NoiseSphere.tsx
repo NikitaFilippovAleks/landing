@@ -28,7 +28,7 @@ export function NoiseSphere() {
   return (
     <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
       <mesh ref={meshRef} scale={1.8}>
-        <icosahedronGeometry args={[1, 64]} />
+        <icosahedronGeometry args={[1, 32]} />
         <MeshDistortMaterial
           color="#7C3AED"
           emissive="#7C3AED"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import type { Project } from "@portfolio/shared-types";
@@ -28,10 +29,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="relative aspect-video overflow-hidden border-b border-white/5">
           {/* Градиентный overlay поверх изображения */}
           <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#050510] via-transparent to-transparent" />
-          <img
+          <Image
             src={project.image_url}
             alt={project.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
         </div>
       )}

@@ -81,10 +81,20 @@ async function refreshAccessToken(): Promise<boolean> {
 // ---------- Аутентификация ----------
 
 export async function login(email: string, password: string): Promise<void> {
-  const data = await fetchApi<TokenResponse>("/api/v1/auth/login", {
+  // Запрос логина идёт напрямую, без перехвата 401 в fetchApi,
+  // чтобы неверный пароль не вызывал редирект и перезагрузку
+  const res = await fetch(`${API_URL}/api/v1/auth/login`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.detail || "Неверный email или пароль");
+  }
+
+  const data: TokenResponse = await res.json();
   setAccessToken(data.access_token);
   setRefreshToken(data.refresh_token);
 }

@@ -12,10 +12,10 @@ export function ParticleField() {
   const purpleRef = useRef<Points>(null);
   const cyanRef = useRef<Points>(null);
 
-  // Генерация позиций частиц один раз
+  // Генерация позиций частиц один раз (уменьшено для производительности)
   const purplePositions = useMemo(() => {
-    const positions = new Float32Array(1500 * 3);
-    for (let i = 0; i < 1500; i++) {
+    const positions = new Float32Array(800 * 3);
+    for (let i = 0; i < 800; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 30;      // x: -15..15
       positions[i * 3 + 1] = (Math.random() - 0.5) * 30;  // y: -15..15
       positions[i * 3 + 2] = (Math.random() - 0.5) * 15 - 2; // z: -10..5
@@ -24,8 +24,8 @@ export function ParticleField() {
   }, []);
 
   const cyanPositions = useMemo(() => {
-    const positions = new Float32Array(500 * 3);
-    for (let i = 0; i < 500; i++) {
+    const positions = new Float32Array(300 * 3);
+    for (let i = 0; i < 300; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 30;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 15 - 2;
