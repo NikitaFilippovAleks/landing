@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/favicon.svg",
+  },
+};
 
 // Корневой layout — минимальный, без Header/Footer
 // Header и Footer находятся в [locale]/layout.tsx с поддержкой i18n
