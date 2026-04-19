@@ -183,9 +183,10 @@ export async function getSettings(): Promise<SiteSetting[]> {
 export async function updateSetting(
   key: string,
   value: string,
+  locale?: string,
 ): Promise<SiteSetting> {
   return fetchApi<SiteSetting>(`/api/v1/admin/settings/${key}`, {
     method: "PUT",
-    body: JSON.stringify({ value }),
+    body: JSON.stringify({ value, locale: locale || null }),
   });
 }

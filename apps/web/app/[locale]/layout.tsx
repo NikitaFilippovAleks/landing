@@ -1,13 +1,14 @@
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getMessages } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { routing } from "@/i18n/routing";
+import { getSettings } from "@/lib/api";
 
 // Шрифты
 const inter = Inter({
@@ -27,6 +28,14 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+// Фолбэк-значения для SEO
+const FALLBACK_TITLE = "Nikita Filippov — Frontend & Mobile Developer";
+const FALLBACK_DESCRIPTION: Record<string, string> = {
+  ru: "Портфолио фронтенд и мобильного разработчика. React, Next.js, Flutter, React Native.",
+  en: "Frontend and mobile developer portfolio. React, Next.js, Flutter, React Native.",
+};
+const FALLBACK_SITE_URL = "https://nikitafilippov.dev";
+
 // Генерация метаданных с учётом локали
 export async function generateMetadata({
   params,
@@ -34,21 +43,27 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "nav" });
+  const settings = await getSettings(locale);
 
-  const title = "Nikita Filippov — Frontend & Mobile Developer";
-  const description =
-    locale === "ru"
-      ? "Портфолио фронтенд и мобильного разработчика. React, Next.js, Flutter, React Native."
-      : "Frontend and mobile developer portfolio. React, Next.js, Flutter, React Native.";
+  const siteUrl = settings.site_url || FALLBACK_SITE_URL;
+  const title = settings.meta_title || FALLBACK_TITLE;
+  const description = settings.meta_description || FALLBACK_DESCRIPTION[locale] || FALLBACK_DESCRIPTION.en;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `${siteUrl}/${locale}`,
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [l, `${siteUrl}/${l}`])
+      ),
+    },
     openGraph: {
       title,
       description,
       type: "website",
+      url: `${siteUrl}/${locale}`,
+      locale: locale === "ru" ? "ru_RU" : "en_US",
     },
   };
 }
